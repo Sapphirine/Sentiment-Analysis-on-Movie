@@ -1,12 +1,18 @@
 package com.cu.bigdata.moviereview;
 
 import com.google.common.collect.Lists;
+
+import org.apache.mahout.classifier.sgd.CrossFoldLearner;
 import org.apache.mahout.classifier.sgd.L1;
+import org.apache.mahout.classifier.sgd.ModelSerializer;
 import org.apache.mahout.classifier.sgd.OnlineLogisticRegression;
 import org.apache.mahout.math.DenseVector;
 import org.apache.mahout.math.RandomAccessSparseVector;
 import org.apache.mahout.math.Vector;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -45,7 +51,7 @@ Double.doubleToLongBits(y);
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         Map<Point, Integer> points = new HashMap<Point, Integer>();
 
@@ -60,8 +66,13 @@ Double.doubleToLongBits(y);
         points.put(new Point(8, 9), 1);
         points.put(new Point(9, 8), 1);
         points.put(new Point(9, 9), 1);
+        
+        points.put(new Point(-8, -8), 2);
+        points.put(new Point(-8, -9), 2);
+        points.put(new Point(-9, -8), 2);
+        points.put(new Point(-9, -9), 2);
 
-        OnlineLogisticRegression learningAlgo = new OnlineLogisticRegression(2, 3, new L1());
+        OnlineLogisticRegression learningAlgo = new OnlineLogisticRegression(3, 3, new L1());
 
         // this is a really big value which will make the model very cautious
         // for lambda = 0.1, the first example below should be about .83 certain
@@ -81,15 +92,27 @@ Double.doubleToLongBits(y);
                 learningAlgo.train(points.get(point), v);
             }
         }
+        
+        // save our trained model
+        String model_path = "models/lcmodel";
+        ModelSerializer.writeBinary(model_path, learningAlgo);
         learningAlgo.close();
+        // load model from disk
+        InputStream in = new FileInputStream(model_path);
+        OnlineLogisticRegression loadedModel = ModelSerializer.readBinary(in, OnlineLogisticRegression.class);
+        in.close();
+        
 
 
         //now classify real data
         Vector v = new RandomAccessSparseVector(3);
-        v.set(0, 0.5);
-        v.set(1, 0.5);
+        v.set(0, -0.5);
+        v.set(1, -0.5);
         v.set(2, 1);
 
+        Vector r0 = loadedModel.classifyFull(v);
+        System.out.println("use loaded model:"+r0);
+        
         Vector r = learningAlgo.classifyFull(v);
         System.out.println(r);
 
@@ -100,6 +123,8 @@ learningAlgo.numCategories());
 learningAlgo.numFeatures());
         System.out.printf("Probability of cluster 0 = %.3f\n", r.get(0));
         System.out.printf("Probability of cluster 1 = %.3f\n", r.get(1));
+        System.out.printf("Probability of cluster 2 = %.3f\n", r.get(2));
+
 
         v.set(0, 4.5);
         v.set(1, 6.5);

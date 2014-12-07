@@ -4,16 +4,17 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 
 import org.apache.mahout.math.RandomAccessSparseVector;
 import org.apache.mahout.math.Vector;
 
 public class CSVHelper {
 	
-	public Set<DataInstance> ReadFromCSV(String filePath){
-		Set<DataInstance> dataset = new HashSet<DataInstance>();
+	public List<DataInstance> ReadFromCSV(String filePath){
+		List<DataInstance> dataset = new ArrayList<DataInstance>();
 		BufferedReader br = null;
 		String line = "";
 		String cvsSplitBy = ",";
@@ -58,7 +59,7 @@ public class CSVHelper {
 	public static void main(String[] args) {
 		String filePath = "data/test.csv";
 		CSVHelper helper = new CSVHelper();
-		Set<DataInstance> ds = helper.ReadFromCSV(filePath);
+		List<DataInstance> ds = helper.ReadFromCSV(filePath);
 		System.out.println(ds.size());
 		for(DataInstance instance : ds){
 			System.out.print(instance.lable+":");
