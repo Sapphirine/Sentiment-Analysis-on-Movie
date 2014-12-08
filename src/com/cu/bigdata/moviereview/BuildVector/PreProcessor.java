@@ -16,7 +16,9 @@ public class PreProcessor {
 //		System.out.println(textInputs.get(5));
 //		System.out.println(stemmedTextInputs.get(5));
 		
-		new StemmedTextWriter().writeFile(stemmedTextInputs);
+		new StemmedTextWriter().writeFile(stemmedTextInputs, lableInputs);
+		Map<String, Integer> dict = new FeatureDictBuilder().buildDict("StemmedText.csv");
+		new VectorWriter().writeCSV(dict, stemmedTextInputs, lableInputs);
 		
 //		HashMap<String, Integer> dict = new HashMap<String, Integer>();
 //		dict.put("this", 0);

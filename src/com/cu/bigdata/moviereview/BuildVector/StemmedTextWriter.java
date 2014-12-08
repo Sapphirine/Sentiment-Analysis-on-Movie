@@ -11,7 +11,8 @@ import java.util.List;
 
 public class StemmedTextWriter {
 	
-	public void writeFile(List<ArrayList<String>> stemmedTextInputs) throws IOException {
+	public void writeFile(List<ArrayList<String>> stemmedTextInputs, 
+			List<String> lableInputs) throws IOException {
 		Path path = Paths.get("StemmedText.csv");
 		try {
 			Files.deleteIfExists(path);
@@ -19,7 +20,7 @@ public class StemmedTextWriter {
 		} catch (Exception e) {}
 		
 		for (int i = 0; i < stemmedTextInputs.size(); i++) {
-			String content = "";
+			String content = lableInputs.get(i) + ",";
 			for (String s: stemmedTextInputs.get(i)) {
 				content = content + s + ",";
 			}

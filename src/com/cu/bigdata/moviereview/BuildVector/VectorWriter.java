@@ -8,8 +8,8 @@ import java.util.*;
 
 public class VectorWriter {
 	
-	public void writeCSV(HashMap<String, Integer> dict, 
-			List<List<String>> stemmedTextInputs, List<String> lableInputs) throws IOException{
+	public void writeCSV(Map<String, Integer> dict, 
+			List<ArrayList<String>> stemmedTextInputs, List<String> lableInputs) throws IOException{
 		
 		Path path = Paths.get("Vector.csv");
 		try {
