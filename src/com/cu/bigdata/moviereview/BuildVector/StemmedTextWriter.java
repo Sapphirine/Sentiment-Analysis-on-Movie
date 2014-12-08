@@ -6,14 +6,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class StemmedTextWriter {
 	
 	public void writeFile(List<ArrayList<String>> stemmedTextInputs, 
 			List<String> lableInputs) throws IOException {
-		Path path = Paths.get("StemmedText.csv");
+		Path path = Paths.get("data/temp/StemmedText.csv");
 		try {
 			Files.deleteIfExists(path);
 			Files.createFile(path);

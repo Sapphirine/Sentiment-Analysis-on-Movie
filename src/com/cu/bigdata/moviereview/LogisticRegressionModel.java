@@ -1,24 +1,18 @@
 package com.cu.bigdata.moviereview;
 
-import com.google.common.collect.Lists;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
-import org.apache.mahout.classifier.sgd.CrossFoldLearner;
 import org.apache.mahout.classifier.sgd.L1;
 import org.apache.mahout.classifier.sgd.ModelSerializer;
 import org.apache.mahout.classifier.sgd.OnlineLogisticRegression;
-import org.apache.mahout.math.DenseVector;
-import org.apache.mahout.math.RandomAccessSparseVector;
 import org.apache.mahout.math.Vector;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import com.cu.bigdata.moviereview.BuildVector.PreProcessor;
 
 public class LogisticRegressionModel {
 	private OnlineLogisticRegression learningAlgo;
@@ -66,6 +60,44 @@ public class LogisticRegressionModel {
 		System.out.println("Success: " + success + " : " + (total - success));
 		System.out.println("Fail: " + (total - success));
 		System.out.println("Precise: " + ((double) success / total));
+	}
+	
+	public static void main(String[] argv) throws IOException {
+		
+		String tp = "data/James+Berardinelli/subj.James+Berardinelli";
+		String lp = "data/James+Berardinelli/label.4class.James+Berardinelli";
+		String to = "data/train.csv";
+		
+		String tpt = "data/Dennis+Schwartz/subj.Dennis+Schwartz";
+		String lpt = "data/Dennis+Schwartz/label.4class.Dennis+Schwartz";
+		String tot = "data/test.csv";
+		
+		// preprecess train data
+		PreProcessor processor = new PreProcessor();
+		processor.toVector(tp, lp, to);
+		
+		// train
+		LogisticRegressionModel model = new LogisticRegressionModel(4, 1000, 0.1, 4);
+		CSVHelper chCsvHelper = new CSVHelper();
+		List<DataInstance> dInstance = chCsvHelper.ReadFromCSV(to);
+		
+		List<DataInstance> train = new ArrayList<DataInstance>();
+		List<DataInstance> test = new ArrayList<DataInstance>();
+		
+		Random rand =  new Random();
+		for (DataInstance dataInstance : dInstance) {
+			int a = rand.nextInt(10);
+			if (a<=7) {
+				train.add(dataInstance);
+			} else {
+				test.add(dataInstance);
+			}
+		}
+		
+		model.LRTrainModel(train, "data/model/lr_model");
+		
+		// test
+		model.LRTest(test);
 	}
 	
 }

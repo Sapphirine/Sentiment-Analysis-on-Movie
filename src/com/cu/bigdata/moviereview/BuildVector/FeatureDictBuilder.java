@@ -8,15 +8,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.apache.mahout.math.RandomAccessSparseVector;
-import org.apache.mahout.math.Vector;
-
-import com.cu.bigdata.moviereview.DataInstance;
+import java.util.TreeMap;
 
 public class FeatureDictBuilder {
 	public FeatureDictBuilder() {
@@ -26,6 +20,8 @@ public class FeatureDictBuilder {
 	public Map<String,Double> calculateMI(String filePath){
 		Map<String, ArrayList<Integer>> MIMap = new HashMap<String, ArrayList<Integer>>();
 		Map<String, Double> featureScoreMap = new HashMap<String, Double>();
+		Map<String, Double> featureScoreMapSorted = new TreeMap<String, Double>(new MyComparator(featureScoreMap));
+		
 		double epsilon = 0.00001;
 		BufferedReader br = null;
 		String line = "";
@@ -97,7 +93,9 @@ public class FeatureDictBuilder {
 					+n00/total*log2((total*n00+epsilon)/((n01+n00)*(n10+n00)+epsilon));
 			featureScoreMap.put(s, score);
 		}
-		return featureScoreMap;
+		
+		featureScoreMapSorted.putAll(featureScoreMap);
+		return featureScoreMapSorted;
 	}
 	
 	private double log2(double x){
@@ -108,6 +106,14 @@ public class FeatureDictBuilder {
 		Map<String, Integer> dict = new HashMap<String, Integer>();
 		Map<String, Double> MIScrore = calculateMI(filePath);
 		//this part is not done yet...
+		int i=0;
+		for (Map.Entry<String, Double> entry : MIScrore.entrySet()) {
+			if (i>=numFeture)
+				break;
+			dict.put(entry.getKey(), i);
+//			System.out.println("Word: " + entry.getKey() + ", score: " + entry.getValue() + ", index: " + i);
+			i++;
+		}
 		return dict;
 	}
 	

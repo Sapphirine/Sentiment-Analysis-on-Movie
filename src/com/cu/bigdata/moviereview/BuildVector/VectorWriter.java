@@ -4,14 +4,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 public class VectorWriter {
 	
 	public void writeCSV(Map<String, Integer> dict, 
-			List<ArrayList<String>> stemmedTextInputs, List<String> lableInputs) throws IOException{
+			List<ArrayList<String>> stemmedTextInputs, List<String> lableInputs, String outputPath) throws IOException{
 		
-		Path path = Paths.get("Vector.csv");
+		Path path = Paths.get(outputPath);
 		try {
 			Files.deleteIfExists(path);
 			Files.createFile(path);

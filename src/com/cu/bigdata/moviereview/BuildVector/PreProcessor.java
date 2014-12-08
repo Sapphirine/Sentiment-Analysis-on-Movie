@@ -1,44 +1,68 @@
 package com.cu.bigdata.moviereview.BuildVector;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class PreProcessor {
+	
+	public void toVector(String textFPath, String labelFPath, String outputPath) {
+		try {
+			FileReader reader = new FileReader();
+//		List<String> lableInputs = reader.readLable("data/James+Berardinelli/label.4class.James+Berardinelli");
+//		List<String> textInputs = reader.readText("data/James+Berardinelli/subj.James+Berardinelli");
+			List<String> lableInputs = reader.readLable(labelFPath);
+			List<String> textInputs = reader.readText(textFPath);
 
+			List<ArrayList<String>> stemmedTextInputs = new Stemmer().stemInput(textInputs);
+			
+			new StemmedTextWriter().writeFile(stemmedTextInputs, lableInputs);
+			Map<String, Integer> dict = new FeatureDictBuilder().buildDictWithMI("data/temp/StemmedText.csv", 10000);
+			new VectorWriter().writeCSV(dict, stemmedTextInputs, lableInputs, outputPath);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void main(String[] args) throws IOException {
 
-		FileReader reader = new FileReader();
-		List<String> lableInputs = reader.readLable(".\\data\\James+Berardinelli\\label.4class.James+Berardinelli");
-		List<String> textInputs = reader.readText(".\\data\\James+Berardinelli\\subj.James+Berardinelli");
-	
-		List<ArrayList<String>> stemmedTextInputs = new Stemmer().stemInput(textInputs);
-//		System.out.println(stemmedTextInputs.size());
-//		System.out.println(textInputs.get(5));
-//		System.out.println(stemmedTextInputs.get(5));
-		
-		new StemmedTextWriter().writeFile(stemmedTextInputs, lableInputs);
-		Map<String, Integer> dict = new FeatureDictBuilder().buildDict("StemmedText.csv");
-		new VectorWriter().writeCSV(dict, stemmedTextInputs, lableInputs);
-		
-//		HashMap<String, Integer> dict = new HashMap<String, Integer>();
-//		dict.put("this", 0);
-//		dict.put("is", 1);
-//		dict.put("a", 2);
-//		dict.put("cat", 3);
-//		List<List<String>> stemmedTextInputs = new ArrayList<List<String>>();
-//		stemmedTextInputs.add(Arrays.asList("this", "is", "a"));
-//		stemmedTextInputs.add(Arrays.asList("is", "a"));
-//		stemmedTextInputs.add(Arrays.asList("this", "is", "cat"));
-//		List<String> lableInputs = Arrays.asList("5", "3", "4");
-		
-//		System.out.println(dict);
-//		System.out.println(stemmedTextInputs);
-//		System.out.println(lableInputs);
+//		FileReader reader = new FileReader();
+////		List<String> lableInputs = reader.readLable(".\\data\\James+Berardinelli\\label.4class.James+Berardinelli");
+////		List<String> textInputs = reader.readText(".\\data\\James+Berardinelli\\subj.James+Berardinelli");
+//		List<String> lableInputs = reader.readLable("data/James+Berardinelli/label.4class.James+Berardinelli");
+//		List<String> textInputs = reader.readText("data/James+Berardinelli/subj.James+Berardinelli");
+//	
+//		List<ArrayList<String>> stemmedTextInputs = new Stemmer().stemInput(textInputs);
+////		System.out.println(stemmedTextInputs.size());
+////		System.out.println(textInputs.get(5));
+////		System.out.println(stemmedTextInputs.get(5));
 //		
+//		new StemmedTextWriter().writeFile(stemmedTextInputs, lableInputs);
+//		Map<String, Integer> dict = new FeatureDictBuilder().buildDictWithMI("StemmedText.csv", 1000);
 //		new VectorWriter().writeCSV(dict, stemmedTextInputs, lableInputs);
+//		
+////		HashMap<String, Integer> dict = new HashMap<String, Integer>();
+////		dict.put("this", 0);
+////		dict.put("is", 1);
+////		dict.put("a", 2);
+////		dict.put("cat", 3);
+////		List<List<String>> stemmedTextInputs = new ArrayList<List<String>>();
+////		stemmedTextInputs.add(Arrays.asList("this", "is", "a"));
+////		stemmedTextInputs.add(Arrays.asList("is", "a"));
+////		stemmedTextInputs.add(Arrays.asList("this", "is", "cat"));
+////		List<String> lableInputs = Arrays.asList("5", "3", "4");
+//		
+////		System.out.println(dict);
+////		System.out.println(stemmedTextInputs);
+////		System.out.println(lableInputs);
+////		
+////		new VectorWriter().writeCSV(dict, stemmedTextInputs, lableInputs);
 	
 	}
 	
 	
 
 }
+//
