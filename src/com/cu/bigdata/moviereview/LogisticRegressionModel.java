@@ -43,7 +43,7 @@ public class LogisticRegressionModel {
 		return r.maxValueIndex();
 	}
 	
-	public void LRTest(List<DataInstance> testset){
+	public double LRTest(List<DataInstance> testset){
 		int total = 0;
 		int success = 0;
 
@@ -60,6 +60,7 @@ public class LogisticRegressionModel {
 		System.out.println("Success: " + success + " : " + (total - success));
 		System.out.println("Fail: " + (total - success));
 		System.out.println("Precise: " + ((double) success / total));
+		return ((double) success / total);
 	}
 	
 	public static void main(String[] argv) throws IOException {
@@ -98,6 +99,33 @@ public class LogisticRegressionModel {
 		
 		// test
 		model.LRTest(test);
+		//10 fold cross validation
+		List<List<DataInstance>> datafolds = new ArrayList<List<DataInstance>>();
+		for(int i = 0;i<10;i++){
+			datafolds.add(new ArrayList<DataInstance>());
+		}
+		for(DataInstance instance:dInstance){
+			int a = rand.nextInt(10);
+			datafolds.get(a).add(instance);
+		}
+		double totalaccuricy = 0;
+		for(int i = 0;i<10;i++){
+			System.out.println("[LRModel]Fold: "+i+"training...");
+			LogisticRegressionModel lrmodel = new LogisticRegressionModel(4, 1000, 0.1, 4);
+			List<DataInstance> trainset = new ArrayList<DataInstance>();
+			List<DataInstance> testset = new ArrayList<DataInstance>();
+			testset.addAll(datafolds.get(i));
+			for(int j = 0;j<10;j++){
+				if(j==i) continue;
+				trainset.addAll(datafolds.get(j));
+			}
+			lrmodel.LRTrainModel(trainset, "data/model/lr_model");
+			System.out.println("[LRModel]Fold: "+i+"Testing...");
+			totalaccuricy += model.LRTest(test);
+			System.out.println("[LRModel]Fold: "+i+"Complete!");
+		}
+		System.out.println("[LRModel]average accuricy:"+totalaccuricy/10);
+		
 	}
 	
 }
