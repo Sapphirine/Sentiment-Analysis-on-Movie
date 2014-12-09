@@ -13,6 +13,7 @@ import org.apache.mahout.classifier.sgd.OnlineLogisticRegression;
 import org.apache.mahout.math.Vector;
 
 import com.cu.bigdata.moviereview.BuildVector.PreProcessor;
+import com.cu.bigdata.moviereview.data.ModelConfig;
 
 public class LogisticRegressionModel {
 	private OnlineLogisticRegression learningAlgo;
@@ -77,7 +78,7 @@ public class LogisticRegressionModel {
 		processor.toVector(tp, lp, to);
 		
 		// train
-		LogisticRegressionModel model = new LogisticRegressionModel(4, 1000, 0.1, 4);
+		LogisticRegressionModel model = new LogisticRegressionModel(4, ModelConfig.FeatureNumber, 0.1, 4);
 		CSVHelper chCsvHelper = new CSVHelper();
 		List<DataInstance> dInstance = chCsvHelper.ReadFromCSV(to);
 		

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.cu.bigdata.moviereview.data.ModelConfig;
+
 public class PreProcessor {
 	
 	public void toVector(String textFPath, String labelFPath, String outputPath) {
@@ -18,7 +20,7 @@ public class PreProcessor {
 			List<ArrayList<String>> stemmedTextInputs = new Stemmer().stemInput(textInputs);
 			
 			new StemmedTextWriter().writeFile(stemmedTextInputs, lableInputs);
-			Map<String, Integer> dict = new FeatureDictBuilder().buildDictWithMI("data/temp/StemmedText.csv", 10000);
+			Map<String, Integer> dict = new FeatureDictBuilder().buildDictWithMI("data/temp/StemmedText.csv", ModelConfig.FeatureNumber);
 			new VectorWriter().writeCSV(dict, stemmedTextInputs, lableInputs, outputPath);
 			
 		} catch (IOException e) {
