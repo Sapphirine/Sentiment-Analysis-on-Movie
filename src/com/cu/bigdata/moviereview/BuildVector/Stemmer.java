@@ -74,7 +74,7 @@ public class Stemmer {
 	 * 4. Remove stopwords
 	 * 5. Set negation flag
 	 */
-	private ArrayList<String> stemInput(String s) {
+	public ArrayList<String> stemInput(String s) {
 		SnowballStemmer stemmer = (SnowballStemmer) new englishStemmer();
 		s = s.replaceAll("[\\.\\,\\:\\?]", replacePunc);
 		s = s.replaceAll("[^a-zA-Z0-9'\\s]", "").replaceAll("\\s+", " ");
