@@ -12,8 +12,8 @@ public class PreProcessor {
 	public void toVector(String textFPath, String labelFPath, String outputPath) {
 		try {
 			FileReader reader = new FileReader();
-//		List<String> lableInputs = reader.readLable("data/James+Berardinelli/label.4class.James+Berardinelli");
-//		List<String> textInputs = reader.readText("data/James+Berardinelli/subj.James+Berardinelli");
+//			List<String> lableInputs = reader.readLable("data/James+Berardinelli/label.4class.James+Berardinelli");
+//			List<String> textInputs = reader.readText("data/James+Berardinelli/subj.James+Berardinelli");
 			List<String> lableInputs = reader.readLable(labelFPath);
 			List<String> textInputs = reader.readText(textFPath);
 
@@ -31,15 +31,15 @@ public class PreProcessor {
 	public static void main(String[] args) throws IOException {
 
 //		FileReader reader = new FileReader();
-////		List<String> lableInputs = reader.readLable(".\\data\\James+Berardinelli\\label.4class.James+Berardinelli");
-////		List<String> textInputs = reader.readText(".\\data\\James+Berardinelli\\subj.James+Berardinelli");
+//		List<String> lableInputs = reader.readLable(".\\data\\James+Berardinelli\\label.4class.James+Berardinelli");
+//		List<String> textInputs = reader.readText(".\\data\\James+Berardinelli\\subj.James+Berardinelli");
 //		List<String> lableInputs = reader.readLable("data/James+Berardinelli/label.4class.James+Berardinelli");
 //		List<String> textInputs = reader.readText("data/James+Berardinelli/subj.James+Berardinelli");
 //	
 //		List<ArrayList<String>> stemmedTextInputs = new Stemmer().stemInput(textInputs);
-////		System.out.println(stemmedTextInputs.size());
-////		System.out.println(textInputs.get(5));
-////		System.out.println(stemmedTextInputs.get(5));
+//		System.out.println(stemmedTextInputs.size());
+//		System.out.println(textInputs.get(50));
+//		System.out.println(stemmedTextInputs.get(50));
 //		
 //		new StemmedTextWriter().writeFile(stemmedTextInputs, lableInputs);
 //		Map<String, Integer> dict = new FeatureDictBuilder().buildDictWithMI("StemmedText.csv", 1000);
@@ -63,8 +63,4 @@ public class PreProcessor {
 ////		new VectorWriter().writeCSV(dict, stemmedTextInputs, lableInputs);
 	
 	}
-	
-	
-
 }
-//
