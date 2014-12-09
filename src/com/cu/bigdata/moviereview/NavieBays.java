@@ -50,6 +50,22 @@ public class NavieBays {
 			writer.close();
 		}
 	}
+	
+	public Vector predict(Vector vector) {
+		Vector prediction = null;
+		try {
+			Configuration conf = new Configuration();
+			String outputDirectory = "data/model/NavieBays_" + ModelConfig.FeatureNumber + "/";
+			NaiveBayesModel naiveBayesModel = NaiveBayesModel.materialize(new Path(
+					outputDirectory), conf);
+			this.classifier = new ComplementaryNaiveBayesClassifier(naiveBayesModel);
+			prediction = classifier.classifyFull(vector);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return prediction;
+	}
 
 	public void train() throws Throwable {
 
@@ -60,7 +76,8 @@ public class NavieBays {
 		trainNaiveBayes.setConf(conf);
 
 		String sequenceFile = "data/NavieBays/seq";
-		String outputDirectory = "data/NavieBays/output";
+//		String outputDirectory = "data/NavieBays/output";
+		String outputDirectory = "data/model/NavieBays_" + ModelConfig.FeatureNumber + "/";
 		String tempDirectory = "data/NavieBays/temp";
 
 		fs.delete(new Path(outputDirectory), true);
@@ -140,8 +157,7 @@ public class NavieBays {
 		try {
 			ModelConfig.FeatureNumber = 5000;
 			// James Dennis+Schwartz
-//			String to = "data/train_log_10000_James.csv";
-			String to = "data/train_log_5000_Dennis+Schwartz.csv";
+			String to = "data/train_log_10000_James.csv";
 			
 			// preprecess train data
 //			PreProcessor processor = new PreProcessor();

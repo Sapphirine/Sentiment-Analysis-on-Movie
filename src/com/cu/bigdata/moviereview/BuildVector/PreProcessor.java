@@ -30,6 +30,14 @@ public class PreProcessor {
 	
 	public static void main(String[] args) throws IOException {
 
+		String tp = "data/James+Berardinelli/subj.James+Berardinelli";
+		String lp = "data/James+Berardinelli/label.4class.James+Berardinelli";
+		String to = "data/train_log_1000_James.csv";
+		ModelConfig.FeatureNumber = 1000;
+		
+		PreProcessor processor = new PreProcessor();
+		processor.toVector(tp, lp, to);
+		
 //		VectorBuilderForWeb test = new VectorBuilderForWeb();
 //		System.out.println(test.buildVector("This is a really bad movie", 1000));
 //		System.out.println(test.buildVector("this is a really bad movie not good at all, but i like it somehow.", 10000));
