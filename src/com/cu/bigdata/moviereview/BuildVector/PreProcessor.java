@@ -30,16 +30,22 @@ public class PreProcessor {
 	
 	public static void main(String[] args) throws IOException {
 
-		String tp = "data/James+Berardinelli/subj.James+Berardinelli";
-		String lp = "data/James+Berardinelli/label.4class.James+Berardinelli";
+//		VectorBuilderForWeb test = new VectorBuilderForWeb();
+//		System.out.println(test.buildVector("This is a really bad movie", 1000));
+//		System.out.println(test.buildVector("this is a really bad movie not good at all, but i like it somehow.", 10000));
+//		System.out.println(test.buildVector("what the fuck sad amazing?", 5000));
+		
+		
+//		String tp = "data/James+Berardinelli/subj.James+Berardinelli";
+//		String lp = "data/James+Berardinelli/label.4class.James+Berardinelli";
 //		String tp = "data/Dennis+Schwartz/subj.Dennis+Schwartz";
 //		String lp = "data/Dennis+Schwartz/label.4class.Dennis+Schwartz";
 		
-		String to = "data/train_log_1000_James.csv";
-		
-		ModelConfig.FeatureNumber = 1000;
-		PreProcessor processor = new PreProcessor();
-		processor.toVector(tp, lp, to);
+//		String to = "data/train_log_1000_James.csv";
+//		
+//		ModelConfig.FeatureNumber = 1000;
+//		PreProcessor processor = new PreProcessor();
+//		processor.toVector(tp, lp, to);
 		
 //		FileReader reader = new FileReader();
 //		List<String> lableInputs = reader.readLable(".\\data\\James+Berardinelli\\label.4class.James+Berardinelli");
