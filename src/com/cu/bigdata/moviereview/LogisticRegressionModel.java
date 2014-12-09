@@ -58,7 +58,7 @@ public class LogisticRegressionModel {
 		}
 
 		System.out.println("Total: " + total);
-		System.out.println("Success: " + success + " : " + (total - success));
+		System.out.println("Success: " + success);
 		System.out.println("Fail: " + (total - success));
 		System.out.println("Precise: " + ((double) success / total));
 		return ((double) success / total);
@@ -70,49 +70,37 @@ public class LogisticRegressionModel {
 		String lp = "data/James+Berardinelli/label.4class.James+Berardinelli";
 		String to = "data/train.csv";
 		
-		String tpt = "data/Dennis+Schwartz/subj.Dennis+Schwartz";
-		String lpt = "data/Dennis+Schwartz/label.4class.Dennis+Schwartz";
-		String tot = "data/test.csv";
+//		String tpt = "data/Dennis+Schwartz/subj.Dennis+Schwartz";
+//		String lpt = "data/Dennis+Schwartz/label.4class.Dennis+Schwartz";
+//		String tot = "data/test.csv";
 		
 		// preprecess train data
 		PreProcessor processor = new PreProcessor();
 		processor.toVector(tp, lp, to);
 		
-		// train
-		LogisticRegressionModel model = new LogisticRegressionModel(4, ModelConfig.FeatureNumber, 0.1, 4);
 		CSVHelper chCsvHelper = new CSVHelper();
 		List<DataInstance> dInstance = chCsvHelper.ReadFromCSV(to);
 		
-		List<DataInstance> train = new ArrayList<DataInstance>();
-		List<DataInstance> test = new ArrayList<DataInstance>();
-		
 		Random rand =  new Random();
-		for (DataInstance dataInstance : dInstance) {
-			int a = rand.nextInt(10);
-			if (a<=7) {
-				train.add(dataInstance);
-			} else {
-				test.add(dataInstance);
-			}
-		}
-		
-		model.LRTrainModel(train, "data/model/lr_model");
-		
-		// test
-		model.LRTest(test);
+
 		//10 fold cross validation
+
 		List<List<DataInstance>> datafolds = new ArrayList<List<DataInstance>>();
+		
 		for(int i = 0;i<10;i++){
 			datafolds.add(new ArrayList<DataInstance>());
 		}
+		
 		for(DataInstance instance:dInstance){
 			int a = rand.nextInt(10);
 			datafolds.get(a).add(instance);
 		}
+		
 		double totalaccuricy = 0;
 		for(int i = 0;i<10;i++){
-			System.out.println("[LRModel]Fold: "+i+"training...");
-			LogisticRegressionModel lrmodel = new LogisticRegressionModel(4, 1000, 0.1, 4);
+			// train
+			System.out.println("[LRModel]Fold: "+i+" training...");
+			LogisticRegressionModel lrmodel = new LogisticRegressionModel(4, ModelConfig.FeatureNumber, 0.1, 4);
 			List<DataInstance> trainset = new ArrayList<DataInstance>();
 			List<DataInstance> testset = new ArrayList<DataInstance>();
 			testset.addAll(datafolds.get(i));
@@ -121,12 +109,14 @@ public class LogisticRegressionModel {
 				trainset.addAll(datafolds.get(j));
 			}
 			lrmodel.LRTrainModel(trainset, "data/model/lr_model");
-			System.out.println("[LRModel]Fold: "+i+"Testing...");
-			totalaccuricy += model.LRTest(test);
-			System.out.println("[LRModel]Fold: "+i+"Complete!");
+			System.out.println("[LRModel]Fold: "+i+" Testing...");
+			
+			// test
+			totalaccuricy += lrmodel.LRTest(testset);
+			System.out.println("[LRModel]Fold: "+i+" Complete!");
 		}
-		System.out.println("[LRModel]average accuricy:"+totalaccuricy/10);
 		
+		System.out.println("[LRModel] Average accuricy:"+totalaccuricy/10);
 	}
 	
 }

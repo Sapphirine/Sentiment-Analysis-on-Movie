@@ -80,7 +80,7 @@ public class NavieBays {
 		this.classifier = new ComplementaryNaiveBayesClassifier(naiveBayesModel);
 	}
 	
-	public void test(List<DataInstance> vectors) {
+	public double test(List<DataInstance> vectors) {
 
 		int total = 0;
 		int success = 0;
@@ -88,15 +88,7 @@ public class NavieBays {
 		for (DataInstance vector : vectors) {
 			Vector prediction = classifier.classifyFull(vector.features);
 
-			int highestScore = 0;
-			Integer predictedLabel = 0;
-			for (int i = 0; i < 4; i++) {
-				if (prediction.get(i) > highestScore) {
-					predictedLabel = i;
-				}
-			}
-			
-			if (predictedLabel.equals(vector.lable)) {
+			if (prediction.maxValueIndex()==vector.lable) {
 				success++;
 			}
 
@@ -104,12 +96,13 @@ public class NavieBays {
 		}
 
 		System.out.println("Total: " + total);
-		System.out.println("Success: " + success + " : " + (total - success));
+		System.out.println("Success: " + success);
 		System.out.println("Fail: " + (total - success));
 		System.out.println("Precise: " + ((double) success / total));
 
 		// StandardNaiveBayesClassifier classifier = new
 		// StandardNaiveBayesClassifier();
+		return ((double) success / total);
 	}
 
 	public void binaryTest(List<DataInstance> vectors) {
@@ -140,7 +133,6 @@ public class NavieBays {
 		System.out.println("Success: " + success);
 		System.out.println("Fail: " + (total - success));
 		System.out.println("Precise: " + ((double) success / total));
-
 	}
 	
 	public static void main(String[] argv) {
@@ -167,24 +159,42 @@ public class NavieBays {
 			List<DataInstance> test = new ArrayList<DataInstance>();
 			
 			Random rand =  new Random();
-			for (DataInstance dataInstance : dInstance) {
-				int a = rand.nextInt(10);
-				if (a<=7) {
-					train.add(dataInstance);
-				} else {
-					test.add(dataInstance);
-				}
+			
+			
+			//10 fold cross validation
+			List<List<DataInstance>> datafolds = new ArrayList<List<DataInstance>>();
+			
+			for(int i = 0;i<10;i++){
+				datafolds.add(new ArrayList<DataInstance>());
 			}
 			
-			model.toSequenceFile(train);
-			model.train();
+			for(DataInstance instance:dInstance){
+				int a = rand.nextInt(10);
+				datafolds.get(a).add(instance);
+			}
 			
-			// preprecess train data
-			processor.toVector(tpt, lpt, tot);
+			double totalaccuricy = 0;
+			for(int i = 0;i<10;i++){
+				// train
+				System.out.println("[LRModel]Fold: "+i+" training...");
+								
+				List<DataInstance> trainset = new ArrayList<DataInstance>();
+				List<DataInstance> testset = new ArrayList<DataInstance>();
+				testset.addAll(datafolds.get(i));
+				for(int j = 0;j<10;j++){
+					if(j==i) continue;
+					trainset.addAll(datafolds.get(j));
+				}
+				model.toSequenceFile(trainset);
+				model.train();
+
+				// test
+				System.out.println("[LRModel]Fold: "+i+" Testing...");
+				totalaccuricy += model.test(testset);
+				System.out.println("[LRModel]Fold: "+i+" Complete!");
+			}
 			
-			// test
-//			model.test(test);
-			model.binaryTest(test);
+			System.out.println("[LRModel] Average accuricy:"+totalaccuricy/10);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
