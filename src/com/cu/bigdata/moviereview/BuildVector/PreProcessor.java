@@ -30,18 +30,16 @@ public class PreProcessor {
 	
 	public static void main(String[] args) throws IOException {
 
-//		String tp = "data/James+Berardinelli/subj.James+Berardinelli";
-//		String lp = "data/James+Berardinelli/label.4class.James+Berardinelli";
-		String tp = "data/Dennis+Schwartz/subj.Dennis+Schwartz";
-		String lp = "data/Dennis+Schwartz/label.4class.Dennis+Schwartz";
+		String tp = "data/James+Berardinelli/subj.James+Berardinelli";
+		String lp = "data/James+Berardinelli/label.4class.James+Berardinelli";
+//		String tp = "data/Dennis+Schwartz/subj.Dennis+Schwartz";
+//		String lp = "data/Dennis+Schwartz/label.4class.Dennis+Schwartz";
 		
-		String to = "data/train_log_5000_Dennis+Schwartz.csv";
+		String to = "data/train_log_1000_James.csv";
 		
-		ModelConfig.FeatureNumber = 5000;
+		ModelConfig.FeatureNumber = 1000;
 		PreProcessor processor = new PreProcessor();
 		processor.toVector(tp, lp, to);
-		
-		
 		
 //		FileReader reader = new FileReader();
 //		List<String> lableInputs = reader.readLable(".\\data\\James+Berardinelli\\label.4class.James+Berardinelli");

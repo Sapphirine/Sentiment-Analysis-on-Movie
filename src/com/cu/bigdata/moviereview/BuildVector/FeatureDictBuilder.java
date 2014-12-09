@@ -1,9 +1,13 @@
 package com.cu.bigdata.moviereview.BuildVector;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -114,6 +118,34 @@ public class FeatureDictBuilder {
 //			System.out.println("Word: " + entry.getKey() + ", score: " + entry.getValue() + ", index: " + i);
 			i++;
 		}
+		
+		// Serialization map
+		try {
+			FileOutputStream fos = new FileOutputStream("data/dict/dict_" + numFeture + ".ser");
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(dict);
+			oos.close();
+			fos.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dict;
+	}
+	
+	public Map<String, Integer> readDictWithMI(Integer numFeture) {
+		Map<String, Integer> dict = new HashMap<String, Integer>();
+		
+		try {
+			FileInputStream fis = new FileInputStream("data/dict/dict_" + numFeture + ".ser");
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			dict = (HashMap<String, Integer>) ois.readObject();
+			ois.close();
+			fis.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return dict;
 	}
 	
