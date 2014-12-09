@@ -10,6 +10,7 @@ public class VectorBuilderForWeb {
 	
 	public Vector buildVector(String s, Integer numFeature) {
 		
+		s = s.toLowerCase();
 		Map<String, Integer> dict = new FeatureDictBuilder().readDictWithMI(numFeature);
 		Stemmer stemmer = new Stemmer();
 		ArrayList<String> stemResult = stemmer.stemInput(s);
