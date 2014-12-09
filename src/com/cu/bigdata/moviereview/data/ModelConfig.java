@@ -8,5 +8,5 @@ package com.cu.bigdata.moviereview.data;
 
 public class ModelConfig {
 
-	public static Integer FeatureNumber = 1000;
+	public static Integer FeatureNumber = 100;
 }

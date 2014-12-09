@@ -23,7 +23,7 @@ import org.apache.mahout.classifier.naivebayes.training.TrainNaiveBayesJob;
 import org.apache.mahout.math.Vector;
 import org.apache.mahout.math.VectorWritable;
 
-import com.cu.bigdata.moviereview.BuildVector.PreProcessor;
+import com.cu.bigdata.moviereview.data.ModelConfig;
 
 public class NavieBays {
 
@@ -138,28 +138,21 @@ public class NavieBays {
 	public static void main(String[] argv) {
 		
 		try {
-			String tp = "data/James+Berardinelli/subj.James+Berardinelli";
-			String lp = "data/James+Berardinelli/label.4class.James+Berardinelli";
-			String to = "data/train.csv";
-			
-			String tpt = "data/Dennis+Schwartz/subj.Dennis+Schwartz";
-			String lpt = "data/Dennis+Schwartz/label.4class.Dennis+Schwartz";
-			String tot = "data/test.csv";
+			ModelConfig.FeatureNumber = 5000;
+			// James Dennis+Schwartz
+//			String to = "data/train_log_10000_James.csv";
+			String to = "data/train_log_5000_Dennis+Schwartz.csv";
 			
 			// preprecess train data
-			PreProcessor processor = new PreProcessor();
-			processor.toVector(tp, lp, to);
+//			PreProcessor processor = new PreProcessor();
+//			processor.toVector(tp, lp, to);
 			
 			// train
 			NavieBays model = new NavieBays();
 			CSVHelper chCsvHelper = new CSVHelper();
 			List<DataInstance> dInstance = chCsvHelper.ReadFromCSV(to);
 			
-			List<DataInstance> train = new ArrayList<DataInstance>();
-			List<DataInstance> test = new ArrayList<DataInstance>();
-			
 			Random rand =  new Random();
-			
 			
 			//10 fold cross validation
 			List<List<DataInstance>> datafolds = new ArrayList<List<DataInstance>>();

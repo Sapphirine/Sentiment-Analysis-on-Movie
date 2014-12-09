@@ -12,7 +12,6 @@ import org.apache.mahout.classifier.sgd.ModelSerializer;
 import org.apache.mahout.classifier.sgd.OnlineLogisticRegression;
 import org.apache.mahout.math.Vector;
 
-import com.cu.bigdata.moviereview.BuildVector.PreProcessor;
 import com.cu.bigdata.moviereview.data.ModelConfig;
 
 public class LogisticRegressionModel {
@@ -66,17 +65,13 @@ public class LogisticRegressionModel {
 	
 	public static void main(String[] argv) throws IOException {
 		
-		String tp = "data/James+Berardinelli/subj.James+Berardinelli";
-		String lp = "data/James+Berardinelli/label.4class.James+Berardinelli";
-		String to = "data/train.csv";
-		
-//		String tpt = "data/Dennis+Schwartz/subj.Dennis+Schwartz";
-//		String lpt = "data/Dennis+Schwartz/label.4class.Dennis+Schwartz";
-//		String tot = "data/test.csv";
+		ModelConfig.FeatureNumber = 10000;
+		String to = "data/train_log_10000.csv";
+//		String to = "data/train_log_5000.csv";
 		
 		// preprecess train data
-		PreProcessor processor = new PreProcessor();
-		processor.toVector(tp, lp, to);
+//		PreProcessor processor = new PreProcessor();
+//		processor.toVector(tp, lp, to);
 		
 		CSVHelper chCsvHelper = new CSVHelper();
 		List<DataInstance> dInstance = chCsvHelper.ReadFromCSV(to);
