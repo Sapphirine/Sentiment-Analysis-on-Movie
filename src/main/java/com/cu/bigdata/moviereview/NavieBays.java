@@ -7,6 +7,7 @@
 package com.cu.bigdata.moviereview;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -23,6 +24,7 @@ import org.apache.mahout.classifier.naivebayes.training.TrainNaiveBayesJob;
 import org.apache.mahout.math.Vector;
 import org.apache.mahout.math.VectorWritable;
 
+import com.cu.bigdata.moviereview.data.DirSwitch;
 import com.cu.bigdata.moviereview.data.ModelConfig;
 
 public class NavieBays {
@@ -51,15 +53,25 @@ public class NavieBays {
 		}
 	}
 	
-	public Vector predict(Vector vector) {
+	public Vector predict(Vector vector) throws URISyntaxException {
 		Vector prediction = null;
 		try {
 			Configuration conf = new Configuration();
-			String outputDirectory = "src/main/resources/data/model/NavieBays_" + ModelConfig.FeatureNumber + "/";
+//			String outputDirectory = "src/main/resources/data/model/NavieBays_" + ModelConfig.FeatureNumber + "/";
 			NaiveBayesModel naiveBayesModel = NaiveBayesModel.materialize(new Path(
-					outputDirectory), conf);
+					new DirSwitch().NavieBays_predict(ModelConfig.FeatureNumber)), conf);
 			this.classifier = new ComplementaryNaiveBayesClassifier(naiveBayesModel);
 			prediction = classifier.classifyFull(vector);
+			
+			double sum = 0;
+			for (int i = 0; i < 4; i++) {
+				sum += prediction.get(i);
+			}
+			prediction.set(0, prediction.get(0)/sum);
+			prediction.set(1, prediction.get(1)/sum);
+			prediction.set(2, prediction.get(2)/sum);
+			prediction.set(3, prediction.get(3)/sum);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

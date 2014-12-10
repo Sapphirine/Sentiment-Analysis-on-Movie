@@ -16,6 +16,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import com.cu.bigdata.moviereview.data.DirSwitch;
+
 public class FeatureDictBuilder {
 	public FeatureDictBuilder() {
 		// TODO Auto-generated constructor stub
@@ -137,7 +139,8 @@ public class FeatureDictBuilder {
 		Map<String, Integer> dict = new HashMap<String, Integer>();
 		
 		try {
-			FileInputStream fis = new FileInputStream("data/dict/dict_" + numFeture + ".ser");
+//			FileInputStream fis = new FileInputStream("src/main/resources/data/dict/dict_" + numFeture + ".ser");
+			FileInputStream fis = new FileInputStream(new DirSwitch().FeatureDictBuilder_readDictWithMI(numFeture));
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			dict = (HashMap<String, Integer>) ois.readObject();
 			ois.close();

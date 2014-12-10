@@ -3,15 +3,15 @@ package com.cu.bigdata.moviereview;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Random;
 
 import org.apache.mahout.classifier.sgd.L1;
 import org.apache.mahout.classifier.sgd.ModelSerializer;
 import org.apache.mahout.classifier.sgd.OnlineLogisticRegression;
 import org.apache.mahout.math.Vector;
 
+import com.cu.bigdata.moviereview.data.DirSwitch;
 import com.cu.bigdata.moviereview.data.ModelConfig;
 
 public class LogisticRegressionModel {
@@ -23,8 +23,9 @@ public class LogisticRegressionModel {
         learningAlgo.learningRate(learningRate);
 	}
 	
-	public LogisticRegressionModel(String model_path) throws IOException{
-        InputStream in = new FileInputStream(model_path);
+	public LogisticRegressionModel(Integer featuresNum) throws IOException, URISyntaxException{
+		
+        InputStream in = new FileInputStream(new DirSwitch().LogisticRegressionModel_CONS(featuresNum));
         learningAlgo = ModelSerializer.readBinary(in, OnlineLogisticRegression.class);
         in.close();
 	}
