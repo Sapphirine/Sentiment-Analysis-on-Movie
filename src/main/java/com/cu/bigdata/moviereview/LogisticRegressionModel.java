@@ -43,6 +43,11 @@ public class LogisticRegressionModel {
 		return r.maxValueIndex();
 	}
 	
+	public Vector LRClassifyInstance(Vector feature){
+		Vector r = learningAlgo.classifyFull(feature);
+		return r;
+	}
+	
 	public double LRTest(List<DataInstance> testset){
 		int total = 0;
 		int success = 0;
@@ -65,9 +70,10 @@ public class LogisticRegressionModel {
 	
 	public static void main(String[] argv) throws IOException {
 				
-		ModelConfig.FeatureNumber = 1000;
+		
 //		String to = "data/train_log_10000.csv";
-		String to = "src/main/resources/data/train_log_1000_James.csv";
+		String to = "src/main/resources/data/train_log_5000_James.csv";
+		String savemodel = "src/main/resources/data/model/LogisticRegressionModels/";
 		
 		// preprecess train data
 //		PreProcessor processor = new PreProcessor();
@@ -75,7 +81,11 @@ public class LogisticRegressionModel {
 		
 		CSVHelper chCsvHelper = new CSVHelper();
 		List<DataInstance> dInstance = chCsvHelper.ReadFromCSV(to);
+		ModelConfig.FeatureNumber = 5000;
+		LogisticRegressionModel lrmodel = new LogisticRegressionModel(4, ModelConfig.FeatureNumber, 0.1, 4);
+		lrmodel.LRTrainModel(dInstance, savemodel+"f"+ModelConfig.FeatureNumber);
 		
+		/*
 		Random rand =  new Random();
 
 		//10 fold cross validation
@@ -112,6 +122,7 @@ public class LogisticRegressionModel {
 		}
 		
 		System.out.println("[LRModel] Average accuricy:"+totalaccuricy/10);
+		*/
 	}
 	
 }
