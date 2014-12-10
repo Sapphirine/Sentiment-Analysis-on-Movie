@@ -1,0 +1,34 @@
+{
+    "Events": [
+        {
+            "startTime": "2014-12-05 09:00:00.0",
+            "hosterUid": 2,
+            "status": "Scheduled",
+            "location": "116th Broadway, New York, NY",
+            "hostPhone": "123456789",
+            "endTime": "2014-12-05 10:00:00.0",
+            "eid": 6,
+            "hosterName": "Di Lin"
+        },
+        {
+            "startTime": "2014-12-22 14:00:00.0",
+            "hosterUid": 3,
+            "status": "Scheduled",
+            "location": "120th Armsterdam, New York, NY",
+            "hostPhone": "123456789",
+            "endTime": "2014-12-22 16:00:00.0",
+            "eid": 4,
+            "hosterName": "Jinsi Li"
+        },
+        {
+            "startTime": "2014-11-12 18:00:00.0",
+            "hosterUid": 9,
+            "status": "InProcess",
+            "location": "120th Broadway, New York, NY",
+            "hostPhone": "123456789",
+            "endTime": "2014-11-15 19:00:00.0",
+            "eid": 9,
+            "hosterName": "Ke Liao"
+        }
+    ]
+}
