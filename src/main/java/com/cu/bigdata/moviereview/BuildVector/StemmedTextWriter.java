@@ -12,7 +12,7 @@ public class StemmedTextWriter {
 	
 	public void writeFile(List<ArrayList<String>> stemmedTextInputs, 
 			List<String> lableInputs) throws IOException {
-		Path path = Paths.get("data/temp/StemmedText.csv");
+		Path path = Paths.get("src/main/resources/data/temp/StemmedText.csv");
 		try {
 			Files.deleteIfExists(path);
 			Files.createFile(path);

@@ -33,7 +33,7 @@ public class NavieBays {
 		Configuration conf = new Configuration();
 		FileSystem fs = FileSystem.getLocal(conf);
 
-		Path seqFilePath = new Path("data/NavieBays/seq");
+		Path seqFilePath = new Path("src/main/resources/data/NavieBays/seq");
 		fs.delete(seqFilePath, false);
 
 		SequenceFile.Writer writer = SequenceFile.createWriter(fs, conf,
@@ -55,7 +55,7 @@ public class NavieBays {
 		Vector prediction = null;
 		try {
 			Configuration conf = new Configuration();
-			String outputDirectory = "data/model/NavieBays_" + ModelConfig.FeatureNumber + "/";
+			String outputDirectory = "src/main/resources/data/model/NavieBays_" + ModelConfig.FeatureNumber + "/";
 			NaiveBayesModel naiveBayesModel = NaiveBayesModel.materialize(new Path(
 					outputDirectory), conf);
 			this.classifier = new ComplementaryNaiveBayesClassifier(naiveBayesModel);
@@ -75,10 +75,10 @@ public class NavieBays {
 		TrainNaiveBayesJob trainNaiveBayes = new TrainNaiveBayesJob();
 		trainNaiveBayes.setConf(conf);
 
-		String sequenceFile = "data/NavieBays/seq";
+		String sequenceFile = "src/main/resources/data/NavieBays/seq";
 //		String outputDirectory = "data/NavieBays/output";
-		String outputDirectory = "data/model/NavieBays_" + ModelConfig.FeatureNumber + "/";
-		String tempDirectory = "data/NavieBays/temp";
+		String outputDirectory = "src/main/resources/data/model/NavieBays_" + ModelConfig.FeatureNumber + "/";
+		String tempDirectory = "src/main/resources/data/NavieBays/temp";
 
 		fs.delete(new Path(outputDirectory), true);
 		fs.delete(new Path(tempDirectory), true);
@@ -157,7 +157,7 @@ public class NavieBays {
 		try {
 			ModelConfig.FeatureNumber = 5000;
 			// James Dennis+Schwartz
-			String to = "data/train_log_10000_James.csv";
+			String to = "src/main/resources/data/train_log_10000_James.csv";
 			
 			// preprecess train data
 //			PreProcessor processor = new PreProcessor();

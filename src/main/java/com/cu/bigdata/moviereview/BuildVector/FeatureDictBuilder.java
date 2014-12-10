@@ -121,7 +121,7 @@ public class FeatureDictBuilder {
 		
 		// Serialization map
 		try {
-			FileOutputStream fos = new FileOutputStream("data/dict/dict_" + numFeture + ".ser");
+			FileOutputStream fos = new FileOutputStream("src/main/resources/data/dict/dict_" + numFeture + ".ser");
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(dict);
 			oos.close();

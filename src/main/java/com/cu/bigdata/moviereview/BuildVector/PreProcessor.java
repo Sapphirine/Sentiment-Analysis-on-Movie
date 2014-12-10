@@ -20,7 +20,7 @@ public class PreProcessor {
 			List<ArrayList<String>> stemmedTextInputs = new Stemmer().stemInput(textInputs);
 			
 			new StemmedTextWriter().writeFile(stemmedTextInputs, lableInputs);
-			Map<String, Integer> dict = new FeatureDictBuilder().buildDictWithMI("data/temp/StemmedText.csv", ModelConfig.FeatureNumber);
+			Map<String, Integer> dict = new FeatureDictBuilder().buildDictWithMI("src/main/resources/data/temp/StemmedText.csv", ModelConfig.FeatureNumber);
 			new VectorWriter().writeCSV(dict, stemmedTextInputs, lableInputs, outputPath);
 			
 		} catch (IOException e) {
@@ -30,9 +30,9 @@ public class PreProcessor {
 	
 	public static void main(String[] args) throws IOException {
 
-		String tp = "data/James+Berardinelli/subj.James+Berardinelli";
-		String lp = "data/James+Berardinelli/label.4class.James+Berardinelli";
-		String to = "data/train_log_1000_James.csv";
+		String tp = "src/main/resources/data/James+Berardinelli/subj.James+Berardinelli";
+		String lp = "src/main/resources/data/James+Berardinelli/label.4class.James+Berardinelli";
+		String to = "src/main/resources/data/train_log_1000_James.csv";
 		ModelConfig.FeatureNumber = 1000;
 		
 		PreProcessor processor = new PreProcessor();

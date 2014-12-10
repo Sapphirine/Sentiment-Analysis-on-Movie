@@ -64,10 +64,10 @@ public class LogisticRegressionModel {
 	}
 	
 	public static void main(String[] argv) throws IOException {
-		
-		ModelConfig.FeatureNumber = 10000;
-		String to = "data/train_log_10000.csv";
-//		String to = "data/train_log_5000.csv";
+				
+		ModelConfig.FeatureNumber = 1000;
+//		String to = "data/train_log_10000.csv";
+		String to = "src/main/resources/data/train_log_1000_James.csv";
 		
 		// preprecess train data
 //		PreProcessor processor = new PreProcessor();
@@ -103,7 +103,7 @@ public class LogisticRegressionModel {
 				if(j==i) continue;
 				trainset.addAll(datafolds.get(j));
 			}
-			lrmodel.LRTrainModel(trainset, "data/model/lr_model");
+			lrmodel.LRTrainModel(trainset, "src/main/resources/data/model/lr_model");
 			System.out.println("[LRModel]Fold: "+i+" Testing...");
 			
 			// test
