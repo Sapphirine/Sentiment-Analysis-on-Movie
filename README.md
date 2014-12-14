@@ -7,6 +7,7 @@ Movie review sites allows users to submit comments to describe their favorite or
 
 Demo Website
 ----
+http://movie-review.elasticbeanstalk.com
 
 
 How to Use Code
