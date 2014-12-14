@@ -43,6 +43,11 @@
 		.bar {
 		  fill: steelblue;
 		}
+		
+		.rect {
+			stroke : #D61C1A;
+			stroke-width : 0;
+		}
 
 
 		</style>
@@ -70,6 +75,22 @@
     		
 
 			function drawGroupedBarChart(divid,data,margin,width,height){
+				
+				var maxnb = data[0].nbscore;
+                var maxlr = data[0].lrscore;
+                var maxnbidx = 0;
+                var maxlridx = 0;
+                for(var i = 0;i<4;i++){
+                    if(data[i].nbscore>maxnb) {
+                        maxnbidx = i;
+                        maxnb = data[i].nbscore;
+                    }
+                    if(data[i].lrscore>maxlr) {
+                        maxlridx = i;
+                        maxlr = data[i].lrscore;
+                    }
+                }
+				
 				var x0 = d3.scale.ordinal()
     					.rangeRoundBands([0, width], .1);
     			var x1 = d3.scale.ordinal();
@@ -116,8 +137,9 @@
 						      .data(data)
 						    .enter().append("g")
 						      .attr("class", "g")
-						      .attr("transform", function(d) { return "translate(" + x0(d.method) + ",0)"; });
-
+						      .attr("transform", function(d) { return "translate(" + x0(d.method) + ",0)"; })
+						      .attr("id",function(d) { return divid+"rectgrp"+d.method;});
+				
 				method.selectAll("rect")
 				      .data(function(d) { return d.score; })
 				    .enter().append("rect")
@@ -125,7 +147,13 @@
 				      .attr("x", function(d) { return x1(d.name); })
 				      .attr("y", function(d) { return y(d.value); })
 				      .attr("height", function(d) { return height - y(d.value); })
+				      .attr("class", "rect")
+				      .attr("id",function(d){return d.name;})
 				      .style("fill", function(d) { return color(d.name); });
+				//console.log();
+				d3.select("#"+divid+"rectgrp"+maxlridx).select("#lrscore").style("stroke-width","2");
+				d3.select("#"+divid+"rectgrp"+maxnbidx).select("#nbscore").style("stroke-width","2");
+				//console.log(method);
 
 				var legend = svg.selectAll(".legend")
 				      .data(methodNames.slice().reverse())
@@ -169,8 +197,8 @@
 			<div class="container">
 				<div role="form">
 					<div class="form-group">
-						<label for="sentence">Put Movie Review Here</label>
-						<textarea class="form-control" rows="3" id="sentence"></textarea>
+						<label for="sentence">Put Movie Review Here</label><a href="https://docs.google.com/document/d/1V_ku0RDCmQhtbynWP048anUe9NoN0-NKGBcdocFeue4/edit?usp=sharing">Example</a>
+						<textarea class="form-control" rows="3" id="sentence">I spent a lot of this film trying to figure out who played what in Harry Potter. Really strong performances, but I walked out wondering what was the point. Maybe that *was* the point?</textarea>
 					</div>
 					<button class="btn btn-default" id="submit">
 						Submit
