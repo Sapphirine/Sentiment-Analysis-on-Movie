@@ -15,15 +15,15 @@ How to Use Code
 This project is a Maven based Java Web application. However, we also provide main method in most of the essential classes like data preprocessing, Naive Bayes training & testing, Logistical Regression training & testing.
 
 1. Run as web application:
-⋅⋅* Clone this repository and import it into eclipse as Maven project
-⋅⋅* Right Click on the project name and choose Run as Maven install, then a war package will be generated under /target
-⋅⋅* You can either deploy the war package into a tomcat based web server or just choose Run as -> Run on Server
+* Clone this repository and import it into eclipse as Maven project
+* Right Click on the project name and choose Run as Maven install, then a war package will be generated under /target
+* You can either deploy the war package into a tomcat based web server or just choose Run as -> Run on Server
 2. Preprocessing data: 
-⋅⋅* com.cu.bigdata.moviereview.BuildVector.Preprocessor: the input are two file directory - one for movie review and another for the rating of the movie review. The output is a csv file which represents the converted vector of each movie review.
+* com.cu.bigdata.moviereview.BuildVector.Preprocessor: the input are two file directory - one for movie review and another for the rating of the movie review. The output is a csv file which represents the converted vector of each movie review.
 3. Naive Bayes:
-⋅⋅* com.cu.bigdata.moviereview.NavieBays
+* com.cu.bigdata.moviereview.NavieBays
 4. Logistical Regression:
-⋅⋅* com.cu.bigdata.moviereview.LogisticRegression
+* com.cu.bigdata.moviereview.LogisticRegression
 
 
 Contributors
